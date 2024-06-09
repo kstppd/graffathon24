@@ -1,4 +1,4 @@
 ## ModulatedSpace by Greenhouse 
-<img src="images/logo.png" alt="Logo" width="200">     
+<img src="logo.png" alt="Logo" width="200">     
 
 
