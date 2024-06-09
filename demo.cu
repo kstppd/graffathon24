@@ -413,7 +413,7 @@ int main() {
     time = GetTime();
 
     UpdateTexture(texture, img.data);
-    DrawTexture(texture, 0, 0, GRAY);
+    DrawTexture(texture, 0, 0, WHITE);
     DrawFPS(0, 0);
     if (time > 105) {
       break;
