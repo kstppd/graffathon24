@@ -91,24 +91,23 @@ __host__ __device__ Vector3<T> add(const Vector3<T> &lhs,
 template <typename T>
 __host__ __device__ Vector3<T> div(const Vector3<T> &lhs,
                                    const Vector3<T> &rhs) {
-  return Vector3<T>{lhs._x/ rhs._x, lhs._y /rhs._y, lhs._z / rhs._z};
+  return Vector3<T>{lhs._x / rhs._x, lhs._y / rhs._y, lhs._z / rhs._z};
 }
 
 template <typename T>
 __host__ __device__ Vector3<T> mul(const Vector3<T> &lhs,
                                    const Vector3<T> &rhs) {
-  return Vector3<T>{lhs._x* rhs._x, lhs._y * rhs._y, lhs._z * rhs._z};
-}
-
-
-template <typename T>
-__host__ __device__ Vector3<T> mul(const T s, const Vector3<T>& v) {
-    return mul(v, s); 
+  return Vector3<T>{lhs._x * rhs._x, lhs._y * rhs._y, lhs._z * rhs._z};
 }
 
 template <typename T>
-__host__ __device__ Vector3<T> mul(const Vector3<T>& v,const T s) {
-    return mul(v, s); 
+__host__ __device__ Vector3<T> mul(const T s, const Vector3<T> &v) {
+  return mul(v, s);
+}
+
+template <typename T>
+__host__ __device__ Vector3<T> mul(const Vector3<T> &v, const T s) {
+  return mul(v, s);
 }
 
 template <typename T> __host__ __device__ int sign(T val) {
@@ -122,13 +121,13 @@ __host__ __device__ Vector3<T> sub(const Vector3<T> &lhs,
 }
 
 template <typename T>
-__host__ __device__ Vector3<T> sub(const Vector3<T>& v, const T& scalar) {
-    return Vector3<T>(v._x - scalar, v._y - scalar, v._z - scalar);
+__host__ __device__ Vector3<T> sub(const Vector3<T> &v, const T &scalar) {
+  return Vector3<T>(v._x - scalar, v._y - scalar, v._z - scalar);
 }
 
 template <typename T>
-__host__ __device__ Vector3<T> sub(const T& scalar, const Vector3<T>& v) {
-    return Vector3<T>(scalar - v._x, scalar - v._y, scalar - v._z);
+__host__ __device__ Vector3<T> sub(const T &scalar, const Vector3<T> &v) {
+  return Vector3<T>(scalar - v._x, scalar - v._y, scalar - v._z);
 }
 
 template <typename T>
@@ -190,21 +189,23 @@ __host__ __device__ Vector3<T> operator*(Vector3<T> p, float S) {
 }
 
 template <typename T>
-__host__ __device__ Vector3<T> clamp(const Vector3<T>& x, const T& minVal, const T& maxVal) {
-    return Vector3<T>(clamp(x._x, minVal, maxVal), clamp(x._y, minVal, maxVal), clamp(x._z, minVal, maxVal));
+__host__ __device__ Vector3<T> clamp(const Vector3<T> &x, const T &minVal,
+                                     const T &maxVal) {
+  return Vector3<T>(clamp(x._x, minVal, maxVal), clamp(x._y, minVal, maxVal),
+                    clamp(x._z, minVal, maxVal));
 }
 
 template <typename T>
 __host__ __device__ Vector3<T>
 smoothstep(const Vector3<T> &a, const Vector3<T> &b, const Vector3<T> &x) {
-  Vector3<T> t = clamp(div((sub(x,a)) , (sub(b,a))), 0.0f, 1.0f);
+  Vector3<T> t = clamp(div((sub(x, a)), (sub(b, a))), 0.0f, 1.0f);
   // return t * t * (3.0 - 2.0 * t);
   return add(mul(mul(t, t), sub(T(3), mul(T(2), t))), mul(t, t));
 }
 
 template <typename T>
-__host__ __device__ Vector3<T> floor(const Vector3<T>& v) {
-    return Vector3<T>(std::floor(v._x), std::floor(v._y), std::floor(v._z));
+__host__ __device__ Vector3<T> floor(const Vector3<T> &v) {
+  return Vector3<T>(std::floor(v._x), std::floor(v._y), std::floor(v._z));
 }
 
 } // namespace Rmarch

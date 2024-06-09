@@ -236,9 +236,9 @@ struct EllipsoidInternals {
   __host__ __device__ void modulate_color(float time, float pa, float pb,
                                           float pc) noexcept {
     float f = 1;
-    u32 r = 255.0 * (1.0+std::sin(2.0 * M_PI * f * time + pa))/2.0;
-    u32 g = 255.0 * (1.0+std::sin(2.0 * M_PI * f * time + pb))/2.0;
-    u32 b = 255.0 * (1.0+std::sin(2.0 * M_PI * f * time + pc))/2.0;
+    u32 r = 255.0 * (1.0 + std::sin(2.0 * M_PI * f * time + pa)) / 2.0;
+    u32 g = 255.0 * (1.0 + std::sin(2.0 * M_PI * f * time + pb)) / 2.0;
+    u32 b = 255.0 * (1.0 + std::sin(2.0 * M_PI * f * time + pc)) / 2.0;
     color = Pixel{255, b, g, r};
   }
 
@@ -324,7 +324,7 @@ __global__ void
 render(Pixel *__restrict__ pixels, Item *const __restrict__ objects,
        const Light *const lights, const size_t n_pixels, const size_t n_objects,
        const size_t n_lighs, Vector3<float> camera_pos,
-       Vector3<float> camera_target, float time,float mod_freq) {
+       Vector3<float> camera_target, float time, float mod_freq) {
 
   const size_t tid = threadIdx.x + blockIdx.x * blockDim.x;
   const float fov = std::tan(30. * (M_PI / 180.) * 0.5f);
@@ -352,9 +352,8 @@ render(Pixel *__restrict__ pixels, Item *const __restrict__ objects,
       }
     }
 
-    auto modulator=[&]()->float{
-        return std::cos(2.0*M_PI*mod_freq*time);
-      
+    auto modulator = [&]() -> float {
+      return std::cos(2.0 * M_PI * mod_freq * time);
     };
 
     // Hacky way to get the hit without slowing down too much
@@ -364,7 +363,7 @@ render(Pixel *__restrict__ pixels, Item *const __restrict__ objects,
       auto toLight = sub(lights[0]._origin, ray_pos);
       toLight.normalize();
       float diffuse = std::max(0.0f, dot(normal, toLight));
-      rgba.scale(diffuse*modulator());
+      rgba.scale(diffuse * modulator());
       pixels[tid] = rgba;
       break;
     }
